@@ -97,7 +97,7 @@ fn row(c: Ctx, cm: *const Commits, commit: *const Commits.Commit) !void {
         try c.w.writeAll("</p>");
     }
     try c.w.print("</div><div class=\"row-links\"><a href=\"{f}\" class=\"link\">Diff</a><a href=\"{f}\" class=\"link\">Files</a></div></div></li>", .{
-        esc(try html.routeUrl(c, location.commitDiffRoute(commit.oid, commit.parent_oid))),
+        esc(try html.routeUrl(c, location.commitDiffRoute(commit.oid, commit.parent_oid, cm.path))),
         esc(try html.routeUrl(c, location.filesRoute(.object, commit.oid, "", 0))),
     });
 }
@@ -134,7 +134,7 @@ fn commitView(c: Ctx, cm: *const Commits, commit: *const Commits.Commit) !void {
         try c.w.writeAll("</dd>");
     }
     try c.w.print("</dl><p class=\"links mt-4\"><a href=\"{f}\" class=\"link\">View changes</a><a href=\"{f}\" class=\"link\">Browse files at this commit</a>", .{
-        esc(try html.routeUrl(c, location.commitDiffRoute(commit.oid, commit.parent_oid))),
+        esc(try html.routeUrl(c, location.commitDiffRoute(commit.oid, commit.parent_oid, cm.path))),
         esc(try html.routeUrl(c, location.filesRoute(.object, commit.oid, "", 0))),
     });
     if (commit.merge) if (location.commitsMergeRoute(commit.oid)) |route| {
